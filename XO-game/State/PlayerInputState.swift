@@ -9,22 +9,26 @@
 import Foundation
 
 class PlayerInputState: GameState {
-
+    
     private(set) var isComplated = false
     
     let player: Player
     private(set) var gameViewController: GameViewController?
     private(set) var gameboard: Gameboard?
     private(set) var gameboardView: GameboardView?
+    let markViewPrototype: MarkView
+    
     
     init(player: Player,
          gameViewController: GameViewController,
          gameboard: Gameboard,
-         gameboardView: GameboardView ) {
+         gameboardView: GameboardView,
+         markViewPrototype: MarkView) {
         self.player = player
         self.gameViewController = gameViewController
         self.gameboard = gameboard
         self.gameboardView = gameboardView
+        self.markViewPrototype = markViewPrototype
     }
     
     func begin() {
@@ -41,21 +45,12 @@ class PlayerInputState: GameState {
     }
     
     func addMark(at position: GameboardPosition) {
+        log(.playerInput(player: player, position: position))
         guard let gameboardView = self.gameboardView,
-        gameboardView.canPlaceMarkView(at: position) else {
-            return
-        }
-        
-        let markView: MarkView
-        switch player {
-        case .first:
-            markView = XView()
-        case .second:
-            markView = OView()
-        }
+              gameboardView.canPlaceMarkView(at: position) else { return }
         
         gameboard?.setPlayer(player, at: position)
-        gameboardView.placeMarkView(markView, at: position)
+        gameboardView.placeMarkView(markViewPrototype.copy(), at: position)
         isComplated = true
     }
     

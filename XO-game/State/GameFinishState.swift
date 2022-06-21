@@ -20,6 +20,7 @@ class GameFinishState: GameState {
     }
     
     func begin() {
+        log(.gameFinished(winner: winner))
         gameViewController?.winnerLabel.isHidden = false
         
         if let winner = winner {

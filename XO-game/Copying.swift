@@ -1,5 +1,5 @@
 //
-//  Copy.swift
+//  Copying.swift
 //  XO-game
 //
 //  Created by Артур Кондратьев on 19.06.2022.

@@ -40,16 +40,18 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func restartButtonTapped(_ sender: UIButton) {
-        
+        log(.restartGame)
     }
     
     //MARK: - Private functions
     
     private func goToFirstState() {
-        currentState = PlayerInputState(player: .first,
+        let player = Player.first
+        currentState = PlayerInputState(player: player,
                                         gameViewController: self,
                                         gameboard: gameboard,
-                                        gameboardView: gameboardView)
+                                        gameboardView: gameboardView,
+                                        markViewPrototype: player.markViewPrototype)
     }
     
     private func goToNextState() {
@@ -60,10 +62,12 @@ class GameViewController: UIViewController {
         
         
         if let playerInputState = currentState as? PlayerInputState {
+            let player = playerInputState.player.next
             currentState = PlayerInputState(player: playerInputState.player.next,
                                             gameViewController: self,
                                             gameboard: gameboard,
-                                            gameboardView: gameboardView)
+                                            gameboardView: gameboardView,
+                                            markViewPrototype: player.markViewPrototype)
         }
         
     }
